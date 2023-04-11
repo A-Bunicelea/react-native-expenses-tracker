@@ -1,20 +1,26 @@
 import { StatusBar } from "expo-status-bar";
+import { StyleSheet } from "react-native";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 
-import ManageExpense from "./screens/ManageExpense";
-import RecentExpenses from "./screens/RecentExpenses";
+import { ExpensesContextProvider } from "./store/expenses-context";
 import AllExpenses from "./screens/AllExpenses";
-import { GlobalStyles } from "./constants/styles";
+import RecentExpenses from "./screens/RecentExpenses";
+import ManageExpense from "./screens/ManageExpense";
 import IconButton from "./components/ui/IconButton";
-import ExpensesContextProvider from "./store/expenses-context";
+import { GlobalStyles } from "./constants/styles";
 
+// & STACK is an obj that gives us access to two components:
+// & 1. the Navigator component
+// & 2. the component where we are registering the screens
 const Stack = createNativeStackNavigator();
 const BottomTabs = createBottomTabNavigator();
 
 function ExpensesOverview() {
+  // this is a component
   return (
     <BottomTabs.Navigator
       screenOptions={({ navigation }) => ({
@@ -27,9 +33,7 @@ function ExpensesOverview() {
             icon="add"
             size={24}
             color={tintColor}
-            onPress={() => {
-              navigation.navigate("ManageExpense");
-            }}
+            onPress={() => navigation.navigate("ManageExpense")}
           />
         ),
       })}
@@ -90,3 +94,12 @@ export default function App() {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
